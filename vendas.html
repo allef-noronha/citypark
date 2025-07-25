@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabela de Vendas</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+
+<header class="topo-vendas">
+  <div class="logo-topo">
+    <img src="img/logo.png" alt="City Park" class="logo-img">
+  </div>
+  <div class="topo-botoes">
+    <button class="icon-btn" id="btn-toggle-filtros" title="Mostrar filtros">&#9776;</button>
+    <a href="index.html" class="icon-btn" title="Página inicial">
+      <i class="fas fa-home"></i>
+    </a>
+  </div>
+</header>
+
+<section class="vendas-topo">
+  <h2>Tabela de Vendas</h2>
+</section>
+
+<section id="filtros" class="filtros oculto">
+  <div class="sticky-bar">
+    <form id="filtro-form">
+      <input type="text" id="filtro-unidade" placeholder="Filtrar por unidade" />
+      <select id="filtro-status">
+        <option value="">Todas os Status</option>
+        <option value="Vendido">Vendido</option>
+        <option value="Disponível">Disponível</option>
+        <option value="Reservado">Reservado</option>
+      </select>
+      <select id="filtro-tipologia">
+        <option value="">Todas as tipologias</option>
+        <option value="3 Quartos">3 Quartos</option>
+        <option value="2 Quartos">2 Quartos</option>
+        <option value="Studio">Studio</option>
+        <option value="Quarto/Sala">Quarto/Sala</option>
+        <option value="Loft">Loft</option>
+      </select>
+      <input type="number" id="filtro-valor" placeholder="Valor máximo (R$)" />
+    </form>
+  </div>
+</section>
+
+<main style="padding: 1rem;">
+  <div id="tabela-vendas"></div>
+</main>
+
+<div id="popup">
+  <div id="popup-content"></div>
+</div>
+
+<section class="footer-company">
+  <div class="footer-content">
+    <img src="img/logo-plano-a.png" alt="City Park Logo" class="logo-footer">
+    <p>Plano A Arquitetura e Engenharia &bull; Rua Dr. Abelardo Pontes Lima, 435, Maceió – AL</p>
+    <p>&copy; 2025 Plano A • Todos os direitos reservados.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>&copy; 2025 Residencial City Park</p>
+</footer>
+
+<script>
+  const btnToggleFiltros = document.getElementById("btn-toggle-filtros");
+  const filtros = document.getElementById("filtros");
+
+  btnToggleFiltros.addEventListener("click", () => {
+    filtros.classList.toggle("oculto");
+  });
+</script>
+
+<script src="js/vendas.js"></script>
+</body>
+</html>
