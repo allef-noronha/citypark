@@ -152,98 +152,122 @@ function mostrarPlanta(imagemUrl) {
 
 
 
-// function enviarProposta(unidade) {
-//   alert(`A proposta para a unidade ${unidade} será enviada ao setor comercial.`);
-//   fecharPopup();
-// }
-
-
 function enviarProposta(unidade) {
-  const item = listaFiltrada.find(i => i.unidade === unidade);
-  if (!item) return;
-
-  // Criar popup personalizado para coleta de dados do cliente
   const popup = document.getElementById("popup");
   const popupContent = document.getElementById("popup-content");
 
+  // Encode para usar no URL
+  const unidadeEncoded = encodeURIComponent(unidade);
+
+  const formURL = `https://docs.google.com/forms/d/e/1FAIpQLSeN0R7Xh48HVat7Zr4ibVh6PAwipC1DNnYPe8bwF01tfGZiBg/viewform?embedded=true&entry.348844169=${unidadeEncoded}`;
+
   popupContent.innerHTML = `
-    <h2>Solicitar Proposta - Unidade ${unidade}</h2>
-    <form id="proposta-form">
-      <div class="form-group">
-        <label>Nome Completo:</label>
-        <input type="text" name="nome" required>
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label>Telefone:</label>
-        <input type="tel" name="telefone" required>
-      </div>
-      <div class="form-group">
-        <label>CPF:</label>
-        <input type="text" name="cpf" required>
-      </div>
-      <div class="form-group">
-        <label>CRECI:</label>
-        <input type="text" name="creci" required>
-      </div>
-      <div class="form-group">
-        <label>Observações:</label>
-        <textarea name="observacoes" rows="3"></textarea>
-      </div>
-      <div class="popup-botoes">
-        <button type="submit" class="ver-btn">Enviar Solicitação</button>
-        <button type="button" class="ver-btn" onclick="fecharPopup()">Cancelar</button>
-      </div>
-    </form>
+    <h2>Solicitação de Proposta - Unidade ${unidade}</h2>
+    <iframe 
+      src="${formURL}"
+      width="100%" 
+      height="1634" 
+      frameborder="0" 
+      marginheight="0" 
+      marginwidth="0">
+        Carregando…
+    </iframe>
+    <div class="popup-botoes">
+      <button class="ver-btn" onclick="fecharPopup()">Fechar</button>
+    </div>
   `;
-
   popup.style.display = "flex";
-
-  // Adicionar listener para envio do formulário
-  document.getElementById("proposta-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-    enviarSolicitacao(this, item);
-  });
 }
 
-async function enviarSolicitacao(form, item) {
-  const formData = new FormData(form);
-  const dados = {
-    unidade: item.unidade,
-    preco: item.preco,
-    tipologia: item.tipologia,
-    area: item.area,
-    nome: formData.get('nome'),
-    email: formData.get('email'),
-    telefone: formData.get('telefone'),
-    cpf: formData.get('cpf'),
-    cpf: formData.get('creci'),
-    observacoes: formData.get('observacoes'),
-    timestamp: new Date().toLocaleString('pt-BR')
-  };
 
-  try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyJwcKLWWH-lAyOSyXGhtm62-bvM0HoVuLYqEyMdIC9fvqSOzVK8Nv6iommJO-SDOH-aw/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dados)
-    });
 
-    if (response.ok) {
-      alert('Solicitação enviada com sucesso! Você receberá um retorno em breve.');
-      fecharPopup();
-    } else {
-      throw new Error('Erro no envio');
-    }
-  } catch (error) {
-    alert('Erro ao enviar solicitação. Tente novamente.');
-    console.error('Erro:', error);
-  }
-}
+
+// function enviarProposta(unidade) {
+//   const item = listaFiltrada.find(i => i.unidade === unidade);
+//   if (!item) return;
+
+//   // Criar popup personalizado para coleta de dados do cliente
+//   const popup = document.getElementById("popup");
+//   const popupContent = document.getElementById("popup-content");
+
+//   popupContent.innerHTML = `
+//     <h2>Solicitar Proposta - Unidade ${unidade}</h2>
+//     <form id="proposta-form">
+//       <div class="form-group">
+//         <label>Nome Completo:</label>
+//         <input type="text" name="nome" required>
+//       </div>
+//       <div class="form-group">
+//         <label>Email:</label>
+//         <input type="email" name="email" required>
+//       </div>
+//       <div class="form-group">
+//         <label>Telefone:</label>
+//         <input type="tel" name="telefone" required>
+//       </div>
+//       <div class="form-group">
+//         <label>CPF:</label>
+//         <input type="text" name="cpf" required>
+//       </div>
+//       <div class="form-group">
+//         <label>CRECI:</label>
+//         <input type="text" name="creci" required>
+//       </div>
+//       <div class="form-group">
+//         <label>Observações:</label>
+//         <textarea name="observacoes" rows="3"></textarea>
+//       </div>
+//       <div class="popup-botoes">
+//         <button type="submit" class="ver-btn">Enviar Solicitação</button>
+//         <button type="button" class="ver-btn" onclick="fecharPopup()">Cancelar</button>
+//       </div>
+//     </form>
+//   `;
+
+//   popup.style.display = "flex";
+
+//   // Adicionar listener para envio do formulário
+//   document.getElementById("proposta-form").addEventListener("submit", function(e) {
+//     e.preventDefault();
+//     enviarSolicitacao(this, item);
+//   });
+// }
+
+// async function enviarSolicitacao(form, item) {
+//   const formData = new FormData(form);
+//   const dados = {
+//     unidade: item.unidade,
+//     preco: item.preco,
+//     tipologia: item.tipologia,
+//     area: item.area,
+//     nome: formData.get('nome'),
+//     email: formData.get('email'),
+//     telefone: formData.get('telefone'),
+//     cpf: formData.get('cpf'),
+//     cpf: formData.get('creci'),
+//     observacoes: formData.get('observacoes'),
+//     timestamp: new Date().toLocaleString('pt-BR')
+//   };
+
+//   try {
+//     const response = await fetch('https://script.google.com/macros/s/AKfycbyJwcKLWWH-lAyOSyXGhtm62-bvM0HoVuLYqEyMdIC9fvqSOzVK8Nv6iommJO-SDOH-aw/exec', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(dados)
+//     });
+
+//     if (response.ok) {
+//       alert('Solicitação enviada com sucesso! Você receberá um retorno em breve.');
+//       fecharPopup();
+//     } else {
+//       throw new Error('Erro no envio');
+//     }
+//   } catch (error) {
+//     alert('Erro ao enviar solicitação. Tente novamente.');
+//     console.error('Erro:', error);
+//   }
+// }
 
 
